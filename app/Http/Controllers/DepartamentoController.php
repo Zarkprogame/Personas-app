@@ -6,7 +6,6 @@ use App\Models\Departamento;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PHPUnit\Framework\Attributes\Depends;
 
 class DepartamentoController extends Controller
 {

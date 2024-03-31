@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     use HasFactory;
-    protected $table = "tb_country";
+    protected $table = "tb_pais";
     protected $primaryKey = "pais_codi";
     public $timestamps = false;
 }
