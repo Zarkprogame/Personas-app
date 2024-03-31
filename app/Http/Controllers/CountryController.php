@@ -26,7 +26,10 @@ class CountryController extends Controller
      */
     public function create()
     {
-        //
+        $municipios = DB::table('tb_municipio')
+        ->orderBy('muni_nomb')
+        ->get();
+        return view('pais.new', ['municipios' => $municipios]);
     }
 
     /**
@@ -34,7 +37,17 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pais = new Country();
+        $pais->pais_codi = $request->id;
+        $pais->pais_nomb = $request->name;
+        $pais->pais_capi = $request->code;
+        $pais->save();
+
+        $paises = DB::table('tb_pais')
+        ->join('tb_municipio', 'tb_pais.pais_capi', '=', 'tb_municipio.muni_codi')
+        ->select('tb_pais.*', 'tb_municipio.muni_nomb')
+        ->get();
+        return view('pais.index', ['paises' => $paises]);
     }
 
     /**
