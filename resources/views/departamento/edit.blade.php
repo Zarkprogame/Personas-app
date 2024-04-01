@@ -27,7 +27,7 @@
                 <input type="text" required class="form-control" id="name" name="name" placeholder="Departament name" value="{{ $departamento->depa_nomb }}">
             </div>
 
-            <label for="pais">Pais</label>
+            <label for="pais">Country</label>
             <select class="form-select" id="pais" name="code" required>
                 <option selected disabled value="">Choose One...</option>
                 @foreach ($paises as $pais)

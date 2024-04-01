@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class MunicipalityController extends Controller
+class MunicipalityController
 {
     /**
      * Display a listing of the resource.

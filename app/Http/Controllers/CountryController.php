@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CountryController extends Controller
+class CountryController
 {
     /**
      * Display a listing of the resource.
@@ -38,7 +37,7 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         $pais = new Country();
-        $pais->pais_codi = $request->id;
+        $pais->pais_codi = strtoupper(substr($request->name,0,3));
         $pais->pais_nomb = $request->name;
         $pais->pais_capi = $request->code;
         $pais->save();
@@ -61,17 +60,33 @@ class CountryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $pais = Country::find($id);
+
+        $municipios = DB::table('tb_municipio')
+        ->orderBy('muni_nomb')
+        ->get();
+
+        return view('pais.edit', ['pais' => $pais, 'municipios' => $municipios]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $pais = Country::find($id);        
+        $pais->pais_nomb = $request->name;
+        $pais->pais_capi = $request->code;
+        $pais->save();
+        
+        $paises = DB::table('tb_pais')
+        ->join('tb_municipio', 'tb_pais.pais_capi', '=', 'tb_municipio.muni_codi')
+        ->select('tb_pais.*', 'tb_municipio.muni_nomb')
+        ->get();
+        return view('pais.index', ['paises' => $paises]);
     }
 
     /**
